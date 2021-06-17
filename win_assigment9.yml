@@ -1,0 +1,14 @@
+#Ansible program to read a entity from the json file than display it path:/home/deepak/Desktop/sample.json
+---
+ - name: Read a entity from json file
+   vars_prompt:
+     - name: json_path
+       prompt: Enter the than for json file
+       private: no
+   hosts: all
+   vars:
+    hostList_name: "{{ lookup('file', '{{json_path}}') }}"
+   tasks:
+     - name: Dispaly the content with entity name from json file
+       debug:
+          msg: "Hai {{ hostList_name.student.Name }}  Welcome  to Ansible World"

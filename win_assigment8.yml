@@ -1,0 +1,23 @@
+#Ansible program to install mongoDb into windows system
+---
+ - name: install mongoDb into windows system
+   hosts: all 
+   tasks:
+     - name: Install MongoDb
+       win_package:
+          path: C:\Users\deepa\Downloads\mongodb-windows-x86_64-4.4.6-signed.msi
+          state: present
+          arguments: -/Next -/Next -/Complete -/Uncheck -/Next -/Next -/Install
+#     - name: set variable
+#      win_command: setx  path "C:\Program Files\MongoDB\Server\4.4\binXCVB" /m
+#     - name: Set an environment variable for all users
+#       win_environment:
+#         state: present
+#         name: path
+#         value: "C:\Program Files\MongoDB"
+#         level: machine
+#     - name: Copy folder to C:\Temp (results in C:\Temp\temp_files)
+#       win_copy:
+#          src: /src/myfiles/foo.conf
+#          dest: C:\Temp\ 
+       

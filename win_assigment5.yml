@@ -1,0 +1,36 @@
+#copy a zip file to windows and unzip it their inside a new file
+---
+ - name: Sent the zip file to windows and unzip
+   hosts: all
+   vars:
+    src_path: '/home/deepak/Desktop/Assigment.zip'
+    win_dest_path: 'Desktop/Assigment.zip'
+    win_file_path: 'Desktop\Linux'
+   tasks:
+     - name: Check whether zip a file already exits in windows
+       win_stat:
+        path: "{{win_dest_path}}"
+       register: show 
+     - name: Copy the zip file from current location to windows desktop
+       win_copy:
+         src: "{{src_path}}"
+         dest: "{{win_dest_path}}"
+       when: not show.stat.exists
+     - name: Check whether their already exist file
+       win_stat:
+        path: "{{win_file_path}}"
+       register: src_file
+     - name: Create a file in desktop
+       win_file:
+         path: "{{win_file_path}}"
+         state: directory
+       when: not src_file.stat.exists
+     - name: Check whether the file already exist
+       win_stat:
+        path: "{{win_file_path}}"
+       register: src_newfile
+     - name: Unzip the File to windows file
+       win_unzip:
+         src: "{{win_dest_path}}"
+         dest: "{{win_file_path}}"
+       when: src_newfile.stat.exists

@@ -1,0 +1,24 @@
+---
+ - name: Create a file 
+   hosts: all
+   vars:
+     src_path: c:\Linux\
+   tasks:
+     - name: Check whether file exist
+       win_stat:
+        path: '{{src_path}}'
+       register: file_out
+     - name: Create a file
+       win_file:
+         path: '{{src_path}}'
+         state: directory
+       when: file_out.stat.exists == false
+     - name: Create some files to that folder
+       win_copy:
+          dest: '{{src_path}}{{item}}'
+          content:
+              It is sample file
+       with_items:
+         - file1.txt
+         - file2.txt
+        
