@@ -1,0 +1,11 @@
+#To start a windows service
+---
+ - name: To Start a windows service
+   hosts: all
+   vars:
+    windows_service_name: bthserv
+   tasks:
+     - name: To start a windows Service
+       win_service:
+          name: "{{windows_service_name}}"
+          state: restarted

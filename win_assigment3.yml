@@ -1,0 +1,9 @@
+---
+ - hosts: all
+   tasks:
+     - name: copy file 
+       win_copy:
+         src: '/home/deepak/sample.yaml'
+         dest: 'Desktop/sample.yaml'
+         
+       

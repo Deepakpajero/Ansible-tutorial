@@ -1,0 +1,10 @@
+#Ansible program to read a entity from the json file than display it
+---
+ - name: Read a entity from json file
+   hosts: all
+   vars:
+    hostList_name: "{{ lookup('file', '/home/deepak/Desktop/sample.json') }}"
+   tasks:
+     - name: Dispaly the content with entity name from json file
+       debug:
+          msg: "Hai {{ hostList_name.student.Name }}  Welcome  to Ansible World"
