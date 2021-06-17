@@ -1,0 +1,26 @@
+#Install a software and check its version 
+---
+ - name: To install a software 
+   hosts: all
+   become: yes
+   vars:
+       software_name: git
+       version_check_cmd: git version
+       current_version: "git version 2.25.1"
+   tasks:
+    - block:  
+      - name: To know about which version of software is already installed
+        command: "{{version_check_cmd}}"
+        register: show
+      - debug:  
+          var: show.stdout_lines
+      - name: Check whether the software you have given is same or not
+        debug: 
+         msg: "Its The latest Version"
+        when: show.stdout_lines[0] == current_version       
+      ignore_errors: yes
+    - name: To install the latest version of the software
+      apt:
+          name: git
+          state: present 
+          update_cache: yes

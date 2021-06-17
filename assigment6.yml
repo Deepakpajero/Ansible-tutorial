@@ -1,0 +1,22 @@
+---
+ - name: Checking the file Content
+   hosts: all
+   gather_facts: no
+   tasks:
+     - name: compair
+       command: diff /home/admin/Desktop/file1.txt /home/admin/Desktop/file2.txt
+       register: show 
+       ignore_errors: yes
+     - debug:
+        msg: "{{ show.stdout_lines}}"
+     - name: Will say duplicate"
+       debug: 
+         msg: "They are duplicate Files"
+       when: show.stdout_lines == [] 
+       ignore_errors: yes  
+     - name: Will say duplicate"
+       debug: 
+         msg: "They are not duplicate Files"
+       when: show.stdout_lines != [] 
+       ignore_errors: yes 
+       
