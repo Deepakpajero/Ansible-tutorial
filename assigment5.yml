@@ -1,0 +1,9 @@
+---
+ - name: The list of active users
+   hosts: all
+   become: yes
+   tasks:
+     - name: check the active users of linux
+       command: w
+       register: show
+     - debug: var=show.stdout_lines

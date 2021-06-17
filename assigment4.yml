@@ -1,0 +1,26 @@
+---
+ - name: Create a New User and set paasword
+   hosts: all
+   become: yes
+   vars: 
+     user_name: "LinuxKing"
+     user_passwd: "1994"
+     group_name: "developer"
+   tasks:
+     - name: Create a new user
+       user:
+          name: "{{user_name}}"
+          #password: root
+     - name: Reset a new password for the user
+       user:
+          name: "{{user_name}}"
+          password: "{{ user_passwd | password_hash('sha512') }}" 
+     - name: Create a new group 
+       group:
+          name: "{{group_name}}"
+          state: present
+     - name: add the user to the new group
+       user:
+          name: "{{user_name}}"
+          group: "{{group_name}}"
+          append: yes

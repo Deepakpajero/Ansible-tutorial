@@ -1,0 +1,22 @@
+#Create a file.txt,If Already that file exit than create a file with a new name file_new,txt
+---
+ - name: Create a file and if already exist than create a file name with a filename_new
+   hosts: all
+   vars: 
+     file_dest_path: /home/admin/Desktop/
+     file_name: haiclient.txt
+     new_file_name: haiclient_new.txt 
+ - tasks:
+    - name: Check whether file with same name already present
+      stat:
+       path: "{{file_dest_path}}{{file_name}}"
+      register: file_check_result
+      ignore_errors: yes
+    - name: Create the new file if it does not present
+      file:
+        path: "{{file_dest_path}}{{file_name}}"
+        state: touch
+      when: not file_check_result.stat.exists == true
+    - name: Create the new file with a new name if the prevision one is present
+      command: touch {{file_dest_path}}{{new_file_name}}    
+      when: file_check_result.stat.exists

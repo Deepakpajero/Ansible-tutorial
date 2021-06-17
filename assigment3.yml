@@ -1,0 +1,51 @@
+# Create a directory 'src-test-project' and Create 5 to 6 text files within that directory.Than create a zip file 'test-project'.
+# Copy the zip file other directory and unzip it at a new directory 'des-test-project'
+---
+ - name: Create a 6 files in a directory and zip and unzip it new directory
+   hosts: all
+   vars:
+     path_src: '/home/admin/src-test-project/'
+     zip_path: '/home/admin/src-test-project.zip'
+     path_dest: '/home/admin/des-test-project'
+   tasks:
+   - name: Check whether directory already present
+     stat:
+       path: '{{ path_src }}'
+     register: dir_out 
+   - name: Create a Directory if their is no Directory like that
+     file:  
+       path: "{{ path_src }}"
+       state: directory
+     when: not dir_out.stat.exists
+   - name: create 6 files inside the directory
+     copy:
+       dest: "{{ path_src }}{{ item }}"
+       content:
+          It contains {{ item }} content
+     with_items:
+     - file1.txt
+     - file2.txt
+     - file3.txt
+     - file4.txt
+     - file5.txt
+     - file6.txt    
+   - name: Zip the folder
+     archive: 
+       path: "{{ path_src }}"
+       dest: "{{ zip_path }}"
+       format: zip
+   - name: Check whether Dir  already present
+     stat:
+       path: '{{ path_dest }}'
+     register: desc_dir_out 
+   - name: Create a new Directory for unzipping
+     file:  
+       path: "{{ path_dest }}"
+       state: directory
+     when: desc_dir_out.stat.exists
+   - name: UNZip the folder 
+     unarchive: 
+       src: "{{ zip_path }}"
+       dest: "{{ path_dest }}"
+       remote_src: yes 
+     when: desc_dir_out.stat.exists
