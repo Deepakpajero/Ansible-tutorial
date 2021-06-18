@@ -4,9 +4,9 @@
  - name: Create a 6 files in a directory and zip and unzip it new directory
    hosts: all
    vars:
-     path_src: '/home/admin/src-test-project/'
-     zip_path: '/home/admin/src-test-project.zip'
-     path_dest: '/home/admin/des-test-project'
+     path_src: '/home/ec2-user/Ansible/src-test-project/'
+     zip_path: '/home/ec2-user/Ansible/src-test-project.zip'
+     path_dest: '/home/ec2-user/Ansible/des-test-project'
    tasks:
    - name: Check whether directory already present
      stat:
