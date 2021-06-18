@@ -20,7 +20,7 @@
         when: show.stdout_lines[0] == current_version       
       ignore_errors: yes
     - name: To install the latest version of the software
-      apt:
+      yum:
           name: git
           state: present 
           update_cache: yes

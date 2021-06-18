@@ -4,7 +4,7 @@
    gather_facts: no
    tasks:
      - name: compair
-       command: diff /home/admin/Desktop/file1.txt /home/admin/Desktop/file2.txt
+       command: diff /home/ec2-user/Ansible/file1.txt /home/ec2-user/Ansible/file2.txt
        register: show 
        ignore_errors: yes
      - debug:
